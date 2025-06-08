@@ -131,7 +131,7 @@ cluster:
       enable-aggregator-routing: true
       feature-gates: MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
-    certSANs: ["127.0.0.1", "10.1.130.10"]
+    certSANs: ["127.0.0.1", "10.0.130.10"]
     disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1
@@ -172,5 +172,5 @@ cluster:
       key: op://homelab/talos/CLUSTER_ETCD_CA_KEY
     extraArgs:
       listen-metrics-urls: http://0.0.0.0:2381
-    advertisedSubnets: ["10.1.130.0/24"]
+    advertisedSubnets: ["10.0.130.0/24"]
   allowSchedulingOnControlPlanes: true
