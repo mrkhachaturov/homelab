@@ -80,11 +80,11 @@ spec:
     matchLabels:
       kubernetes.io/os: linux
   bgpInstances:
-    - name: "instance-64514"
-      localASN: 64514
+    - name: "instance-64614"
+      localASN: 64614
       peers:
-        - name: "peer-64513-ipv4"
-          peerASN: 64513
+        - name: "peer-64613-ipv4"
+          peerASN: 64613
           peerAddress: "10.0.130.1"
           peerConfigRef:
             name: "cilium-bgp-peer-config-ipv4"

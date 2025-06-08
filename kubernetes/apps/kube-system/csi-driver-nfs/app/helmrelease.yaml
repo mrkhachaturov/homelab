@@ -37,7 +37,7 @@ spec:
       create: true
       name: nfs-slow
       parameters:
-        server: mrk-nas1.homelab.am
+        server: nas.homelab.am
         share: /volume1/Kubernetes
       mountOptions:
         - nfsvers=4.1
