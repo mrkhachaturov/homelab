@@ -1,0 +1,102 @@
+---
+# yaml-language-server: $schema=https://k8s-validation-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: mikrotik-dns
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.16.1
+  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
+---
+# yaml-language-server: $schema=https://k8s-validation-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app mikrotik-dns
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: mikrotik-dns
+  install:
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
+    remediation:
+      retries: -1
+  upgrade:
+    cleanupOnFail: true
+    disableSchemaValidation: true # Ref: https://github.com/kubernetes-sigs/external-dns/issues/5206
+    remediation:
+      retries: 3
+  values:
+    fullnameOverride: *app
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
+          tag: v1.4.8@sha256:66c7c937ded93375622496478111072b9f6b4addc724ce4fd02426ad2df009f7
+          pullPolicy: IfNotPresent
+        env:
+          - name: LOG_FORMAT
+            value: json
+          - name: LOG_LEVEL
+            value: info
+
+          - name: MIKROTIK_DEFAULT_TTL
+            value: "1800"
+          - name: MIKROTIK_DEFAULT_COMMENT
+            value: Managed by ExternalDNS
+
+          - name: MIKROTIK_BASEURL
+            valueFrom:
+              secretKeyRef:
+                name: &secret mikrotik-dns-secret
+                key: MIKROTIK_BASEURL
+          - name: MIKROTIK_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: *secret
+                key: MIKROTIK_USERNAME
+          - name: MIKROTIK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: *secret
+                key: MIKROTIK_PASSWORD
+          - name: MIKROTIK_SKIP_TLS_VERIFY
+            valueFrom:
+              secretKeyRef:
+                name: *secret
+                key: MIKROTIK_SKIP_TLS_VERIFY
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /readyz
+            port: http-webhook
+          initialDelaySeconds: 10
+          timeoutSeconds: 5
+    extraArgs:
+      - --ignore-ingress-tls-spec
+      - --managed-record-types=A
+      # - --managed-record-types=AAAA
+      - --managed-record-types=CNAME
+      - --managed-record-types=SRV
+    triggerLoopOnEvent: true
+    policy: sync
+    sources: ["gateway-httproute", "service"]
+    txtOwnerId: main
+    txtPrefix: k8s.main.
+    domainFilters: ["mrk.am"]
+    serviceMonitor:
+      enabled: true
+    podAnnotations:
+      secret.reloader.stakater.com/reload: *secret

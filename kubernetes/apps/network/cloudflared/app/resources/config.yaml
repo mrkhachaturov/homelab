@@ -1,0 +1,10 @@
+---
+originRequest:
+  originServerName: external.mrk.am
+
+ingress:
+  - hostname: mrk.am
+    service: &svc https://envoy-gateway-external.network.svc.cluster.local
+  - hostname: "*.mrk.am"
+    service: *svc
+  - service: http_status:404

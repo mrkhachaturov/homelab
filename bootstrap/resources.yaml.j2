@@ -1,0 +1,52 @@
+{% for namespace in ["external-secrets", "flux-system", "network"] %}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ namespace }}
+{% endfor %}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: onepassword-secret
+  namespace: external-secrets
+stringData:
+  token: op://homelab/1password/OP_CONNECT_TOKEN
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sops-age
+  namespace: flux-system
+stringData:
+  age.agekey: op://homelab/sops/SOPS_PRIVATE_KEY
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mrk-am-tls
+  namespace: network
+  annotations:
+    cert-manager.io/alt-names: '*.mrk.am,mrk.am'
+    cert-manager.io/certificate-name: mrk-am
+    cert-manager.io/common-name: mrk.am
+    cert-manager.io/ip-sans: ""
+    cert-manager.io/issuer-group: ""
+    cert-manager.io/issuer-kind: ClusterIssuer
+    cert-manager.io/issuer-name: letsencrypt-production
+    cert-manager.io/uri-sans: ""
+  labels:
+    controller.cert-manager.io/fao: "true"
+type: kubernetes.io/tls
+data:
+  tls.crt: op://homelab/mrk-am-tls/tls.crt
+  tls.key: op://homelab/mrk-am-tls/tls.key
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cloudflare-tunnel-id-secret
+  namespace: network
+stringData:
+  CLOUDFLARE_TUNNEL_ID: op://homelab/cloudflare/CLOUDFLARE_TUNNEL_ID
