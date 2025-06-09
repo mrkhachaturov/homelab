@@ -23,8 +23,7 @@ machine:
   network:
     nameservers: ["10.0.130.1"]
   install:
-    diskSelector:
-      model: QEMU HARDDISK
+    disk: /dev/vda
   #   extraKernelArgs:
   #     - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
   #     - apparmor=0                          # Less security, faster puter
@@ -37,7 +36,7 @@ machine:
   #     - security=none                       # Less security, faster puter
   #     - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
   #     - talos.auditd.disabled=1             # Less security, faster puter
-    wipe: false
+    wipe: true
   files:
     - # Spegel
       op: create
@@ -57,7 +56,7 @@ machine:
   time:
     disabled: false
     servers:
-      - 10.0.130.1
+      - time.cloudflare.com
   sysctls:
     fs.inotify.max_user_watches: "1048576"      # Watchdog
     fs.inotify.max_user_instances: "8192"       # Watchdog
@@ -69,10 +68,6 @@ machine:
   features:
     rbac: true
     stableHostname: true
-    kubernetesTalosAPIAccess:
-      enabled: true
-      allowedRoles: ["os:admin"]
-      allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     apidCheckExtKeyUsage: true
     diskQuotaSupport: true
     kubePrism:
@@ -103,7 +98,7 @@ cluster:
   secret: op://homelab/talos/CLUSTER_SECRET
   controlPlane:
     endpoint: https://10.0.130.11:6443
-  clusterName: main
+  clusterName: homelab
   network:
     cni:
       name: none
