@@ -6,7 +6,7 @@ machine:
   ca:
     crt: op://homelab/talos/MACHINE_CA_CRT
     key: op://homelab/talos/MACHINE_CA_KEY
-  certSANs: ["127.0.0.1", "10.0.130.11"]
+  certSANs: ["127.0.0.1", "10.0.130.10"]
   kubelet:
     image: ghcr.io/siderolabs/kubelet:{{ ENV.KUBERNETES_VERSION }}
     extraConfig:
@@ -56,7 +56,7 @@ machine:
   time:
     disabled: false
     servers:
-      - time.cloudflare.com
+      - 10.0.130.1
   sysctls:
     fs.inotify.max_user_watches: "1048576"      # Watchdog
     fs.inotify.max_user_instances: "8192"       # Watchdog
@@ -101,7 +101,7 @@ cluster:
   id: op://homelab/talos/CLUSTER_ID
   secret: op://homelab/talos/CLUSTER_SECRET
   controlPlane:
-    endpoint: https://10.0.130.11:6443
+    endpoint: https://10.0.130.10:6443
   clusterName: homelab
   network:
     cni:
@@ -127,7 +127,7 @@ cluster:
       enable-aggregator-routing: true
       feature-gates: MutatingAdmissionPolicy=true
       runtime-config: admissionregistration.k8s.io/v1alpha1=true
-    certSANs: ["127.0.0.1", "10.0.130.11"]
+    certSANs: ["127.0.0.1", "10.0.130.10"]
     disablePodSecurityPolicy: true
     auditPolicy:
       apiVersion: audit.k8s.io/v1

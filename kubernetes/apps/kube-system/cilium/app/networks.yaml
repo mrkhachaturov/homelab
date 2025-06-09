@@ -15,7 +15,7 @@ metadata:
   name: l2-policy
 spec:
   loadBalancerIPs: true
-  interfaces: ["^ens[0-9]+"]
+  interfaces: ["^eth[0-9]+"]
   nodeSelector:
     matchLabels:
       kubernetes.io/os: linux
@@ -25,7 +25,7 @@ kind: Service
 metadata:
   name: kube-vip
   annotations:
-    lbipam.cilium.io/ips: 10.0.130.11
+    lbipam.cilium.io/ips: 10.0.130.10
 spec:
   type: LoadBalancer
   selector:
