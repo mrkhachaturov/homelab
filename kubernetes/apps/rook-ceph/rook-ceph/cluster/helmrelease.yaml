@@ -84,8 +84,7 @@ spec:
       storage:
         useAllNodes: true
         useAllDevices: false
-        devices:
-            - name: "/dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_50026B7785AACA55"
+        devicePathFilter: /dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_.*
         allowOsdCrushWeightUpdate: false
         config:
           osdsPerDevice: "1"
