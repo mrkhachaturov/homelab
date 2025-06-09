@@ -20,7 +20,7 @@ metadata:
   name: rook-ceph-cluster
 spec:
   interval: 1h
-  timeout: 15m
+  timeout: 10m
   chartRef:
     kind: OCIRepository
     name: rook-ceph-cluster
@@ -55,7 +55,6 @@ spec:
       csi:
         readAffinity:
           enabled: true
-      removeOSDsIfOutAndSafeToRemove: false
       dashboard:
         enabled: true
         urlPrefix: /
@@ -86,18 +85,18 @@ spec:
         useAllDevices: false
         devicePathFilter: /dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_.*
         allowOsdCrushWeightUpdate: false
+        allowDeviceClassUpdate: true
         config:
           osdsPerDevice: "1"
       disruptionManagement:
-        managePodBudgets: false
-        osdMaintenanceTimeout: 30
-        manageMachineDisruptionBudgets: false
+        managePodBudgets: true
     cephBlockPools:
       - name: ceph-blockpool
         spec:
           failureDomain: host
           replicated:
             size: 1
+            requireSafeReplicaSize: false
         storageClass:
           enabled: true
           name: ceph-block
