@@ -69,6 +69,10 @@ machine:
     rbac: true
     stableHostname: true
     apidCheckExtKeyUsage: true
+    kubernetesTalosAPIAccess:
+      enabled: true
+      allowedRoles: ["os:admin"]
+      allowedKubernetesNamespaces: ["actions-runner-system", "system-upgrade"]
     diskQuotaSupport: true
     kubePrism:
       enabled: true
