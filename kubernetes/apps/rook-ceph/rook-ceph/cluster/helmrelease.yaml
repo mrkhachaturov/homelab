@@ -32,9 +32,9 @@ spec:
     remediation:
       retries: 3
   values:
-    configOverride: |
-      [global]
-      osd_pool_default_size = 1
+    # configOverride: |
+    #   [global]
+    #   osd_pool_default_size = 1
     monitoring:
       enabled: false
       createPrometheusRules: true
