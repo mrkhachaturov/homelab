@@ -50,8 +50,8 @@ spec:
           mon_data_avail_warn: "10"
       crashCollector:
         disable: true
-      cleanupPolicy:
-        confirmation: ""
+      # cleanupPolicy:
+      #   confirmation: ""
       csi:
         readAffinity:
           enabled: true
@@ -88,10 +88,10 @@ spec:
         allowOsdCrushWeightUpdate: false
         config:
           osdsPerDevice: "1"
-      disruptionManagement:
-        managePodBudgets: false
-        osdMaintenanceTimeout: 30
-        manageMachineDisruptionBudgets: false
+      # disruptionManagement:
+      #   managePodBudgets: false
+      #   osdMaintenanceTimeout: 30
+      #   manageMachineDisruptionBudgets: false
     cephBlockPools:
       - name: ceph-blockpool
         spec:
