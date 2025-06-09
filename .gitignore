@@ -13,3 +13,4 @@ Thumbs.db
 kubeconfig
 onepassword.env
 talosconfig
+cloudflare-tunnel.json
