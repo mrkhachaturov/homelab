@@ -88,17 +88,16 @@ spec:
         allowOsdCrushWeightUpdate: false
         config:
           osdsPerDevice: "1"
-      # disruptionManagement:
-      #   managePodBudgets: false
-      #   osdMaintenanceTimeout: 30
-      #   manageMachineDisruptionBudgets: false
+      disruptionManagement:
+        managePodBudgets: false
+        osdMaintenanceTimeout: 30
+        manageMachineDisruptionBudgets: false
     cephBlockPools:
       - name: ceph-blockpool
         spec:
           failureDomain: host
           replicated:
             size: 1
-            requireSafeReplicaSize: false
         storageClass:
           enabled: true
           name: ceph-block
