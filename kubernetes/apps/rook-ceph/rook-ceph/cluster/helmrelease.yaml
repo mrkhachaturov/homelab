@@ -85,7 +85,7 @@ spec:
         useAllNodes: true
         useAllDevices: false
         devices:
-          - name: "/dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_50026B7785AACA55"
+            - name: "/dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_50026B7785AACA55"
         allowOsdCrushWeightUpdate: false
         config:
           osdsPerDevice: "1"
