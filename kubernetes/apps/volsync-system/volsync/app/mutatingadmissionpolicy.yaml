@@ -98,7 +98,7 @@ spec:
               value: Object.spec.template.spec.volumes{
                 name: "repository",
                 nfs: Object.spec.template.spec.volumes.nfs{
-                  server: "nas.homelab.am",
+                  server: "mrk-nas.homelab.am",
                   path: "/volume1/Volsync"
                 }
               }
