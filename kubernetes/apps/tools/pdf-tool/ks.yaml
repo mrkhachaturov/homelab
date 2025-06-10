@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  path: ./kubernetes/main/apps/tools/pdf-tool/app
+  path: ./kubernetes/apps/tools/pdf-tool/app
   sourceRef:
     kind: GitRepository
     name: flux-system
