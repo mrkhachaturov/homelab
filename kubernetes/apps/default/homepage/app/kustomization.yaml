@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  # - configmap.yaml
+  - externalsecret.yaml
+  - helmrelease.yaml
+  # - rbac.yaml
+configMapGenerator:
+  - name: homepage-config
+    files:
+      - kubernetes.yaml=./resources/kubernetes.yaml
+      - settings.yaml=./resources/settings.yaml
+      - bookmarks.yaml=./resources/bookmarks.yaml
+      - services.yaml=./resources/services.yaml
+      - widgets.yaml=./resources/widgets.yaml
+    literals:
+      - custom.css=
+      - custom.js=
+      - docker.yaml=
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled

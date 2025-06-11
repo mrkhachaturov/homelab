@@ -1,0 +1,195 @@
+---
+data:
+  kubernetes.yaml: |
+    mode: cluster
+    gateway: true
+    ingress: false
+    traefik: false
+  settings.yaml: |
+    # https://raw.githubusercontent.com/walkxcode/dashboard-icons/main/ICONS.md
+    # https://pictogrammers.com/library/mdi/
+    # https://simpleicons.org/
+    title: AstraTeam Dashboard
+    favicon: https://github.com/walkxcode/dashboard-icons/blob/main/png/heimdall.png
+    background:
+      image: https://images.unsplash.com/photo-1502790671504-542ad42d5189?auto=format&fit=crop&w=2560&q=80
+      blur: sm # sm, md, xl... see https://tailwindcss.com/docs/backdrop-blur
+      saturate: 100 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+      brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+      opacity: 100 # 0-100
+    theme: dark
+    color: slate
+    headerStyle: clean
+    hideVersion: true
+    useEqualHeights: true
+    language: ru
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+    layout:
+      Календарь:
+        style: row
+        header: false
+      Главная:
+        style: row
+        columns: 3
+        icon: mdi-home-analytics
+        header: false
+      AI:
+        style: row
+        columns: 2
+        icon: si-openapiinitiative
+      Media:
+        style: row
+        columns: 2
+        icon: mdi-play-circle
+      Downloads:
+        style: row
+        columns: 3
+        icon: mdi-download-circle
+      Автоматизация:
+        style: column
+        columns: 2
+        icon: mdi-home-automation
+      Observability:
+        style: column
+        icon: mdi-monitor-eye
+      Ресурсы:
+        style: column
+        icon: mdi-server-network
+      Storage:
+        style: column
+        icon: mdi-database
+      System:
+        style: row
+        columns: 4
+        icon: mdi-application
+  custom.css: ""
+  custom.js: ""
+  bookmarks.yaml: |
+    - Social:
+        - Discord:
+            - icon: discord.png
+              href: https://discord.com/app
+        - Gmail:
+            - icon: gmail.png
+              href: http://gmail.com
+        - Reddit:
+            - icon: reddit.png
+              href: https://reddit.com
+        - Twitch:
+            - icon: twitch.png
+              href: https://twitch.tv
+        - YouTube:
+            - icon: youtube.png
+              href: https://youtube.com/feed/subscriptions
+    - Cloud:
+        - CloudFlare:
+            - icon: cloudflare.png
+              href: https://dash.cloudflare.com
+        - AWS Console:
+            - icon: aws.png
+              href: https://aws.amazon.com/console/
+        - Pushover:
+            - icon: pushover.png
+              href: https://client.pushover.net/
+        - UptimeRobot:
+            - icon: si-statuspage
+              href: https://uptimerobot.com/
+        - HealthChecks:
+            - icon: healthchecks.png
+              href: https://healthcheck.io/
+    - Git:
+        - Kubesearch:
+            - icon: kubernetes-dashboard.png
+              description: Helm Chart Search
+              href: https://nanne.dev/k8s-at-home-search/
+        - home-cluster:
+            - icon: github.png
+              description: Renovate Dashboard
+              href: https://github.com/mchestr/home-cluster/issues/2976
+        - Homepage Icons:
+            - icon: si-jpeg
+              href: https://github.com/homarr-labs/dashboard-icons/blob/main/ICONS.md
+        - Homepage MDI:
+            - icon: si-materialdesign
+              href: https://pictogrammers.com/library/mdi/
+        - Homepage SI:
+            - icon: si-simpleicons
+              href: https://simpleicons.org/
+        - Armtek:
+            - icon: si-simpleicons
+              href: https://etp.armtek.ru/
+  services.yaml: |
+    - Календарь:
+        - Календарь:
+            widget:
+              type: calendar
+              firstDayInWeek: monday
+              view: monthly
+              maxEvents: 10
+              showTime: true
+              timezone: Europe/Moscow
+              # integrations:
+              #   - type: ical
+              #     url: https://www.calend.ru/ical/ical-russtate.ics?v=yy2025&b=1
+              #     name: Праздники РФ
+              #     # color: zinc
+              #     params: # optional - additional params for the service
+              #       showName: true # optional - show name before event title in event line - defaults to false
+    - Главная:
+        - Ispring:
+            icon: booklogr.png
+            href: https://atacademy.ispring.ru/
+            description: Платформа для онлайн-обучения
+            siteMonitor: https://atacademy.ispring.ru/
+        # - Confluence:
+        #     icon: confluence.png
+        #     href: https://wiki.astrateam.net
+        #     description: База знаний компании
+        # - Bitwarden:
+        #     icon: bitwarden.png
+        #     href: https://pass.astrateam.net
+        #     description: Менеджер паролей
+
+    # - Ресурсы:
+    #     - Jira:
+    #         icon: jira.png
+    #         href: https://jira.astrateam.net
+    #         description: Система управления проектами
+
+  widgets.yaml: |
+    - search:
+        provider: custom
+        url: https://wiki.astrateam.net/dosearchsite.action?queryString=
+        target: _blank
+        showSearchSuggestions: false
+    # - kubernetes:
+    #     cluster:
+    #       cpu: true
+    #       label: cluster
+    #       memory: true
+    #       show: true
+    #       showLabel: true
+    #     nodes:
+    #       cpu: true
+    #       memory: true
+    #       show: true
+    #       showLabel: true
+    - datetime:
+        text_size: l
+        format:
+          dateStyle: long
+          timeStyle: short
+          hourCycle: h23
+    - openweathermap:
+        label: Ивантеевка #optional
+        latitude: 55.976201
+        longitude: 37.907414
+        units: metric # or imperial
+        provider: openweathermap
+        apiKey: {{HOMEPAGE_VAR_OPENWEATHERMAP_KEY}} # required only if not using provider, this reveals api key in requests
+        cache: 5 # Time in minutes to cache API responses, to stay within limits
+        format: # optional, Intl.NumberFormat options
+          maximumFractionDigits: 1
+  docker.yaml: ""
