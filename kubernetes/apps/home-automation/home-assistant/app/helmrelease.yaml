@@ -58,8 +58,8 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.astrateam.net"
-          - hass.astrateam.net
+          - "{{ .Release.Name }}.mrk.am"
+          - hass.mrk.am
         parentRefs:
           - name: external
             namespace: network
