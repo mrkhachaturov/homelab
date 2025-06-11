@@ -6,5 +6,5 @@ resources:
   # - ./immich.yaml
   - ./prometheusrule.yaml
   - ./scheduledbackup.yaml
-  - ./service.yaml
+  # - ./service.yaml
   - ./pooler.yaml
