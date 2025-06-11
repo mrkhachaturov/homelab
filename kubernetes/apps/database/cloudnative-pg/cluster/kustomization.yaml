@@ -7,3 +7,4 @@ resources:
   - ./prometheusrule.yaml
   - ./scheduledbackup.yaml
   - ./service.yaml
+  - ./pooler.yaml
