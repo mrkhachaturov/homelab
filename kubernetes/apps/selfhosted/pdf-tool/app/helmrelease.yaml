@@ -34,7 +34,7 @@ spec:
           http:
             port: &port 8080
     route:
-      internal:
+      app:
         hostnames: ["{{ .Release.Name }}.mrk.am"]
         parentRefs:
           - name: internal
