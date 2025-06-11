@@ -1,0 +1,171 @@
+---
+log:
+  level: info
+
+authentication_backend:
+  ldap:
+    address: ldap://lldap.default.svc.cluster.local:389
+    implementation: custom
+    timeout: 5s
+    start_tls: false
+    base_dn: dc=home,dc=arpa
+    additional_users_dn: ou=people
+    users_filter: (&({username_attribute}={input})(objectClass=person))
+    additional_groups_dn: ou=groups
+    groups_filter: (member={dn})
+    user: uid=admin,ou=people,dc=home,dc=arpa
+    attributes:
+      username: uid
+      display_name: displayName
+      group_name: cn
+      mail: mail
+      member_of: memberOf
+  password_reset:
+    disable: true
+  refresh_interval: 1m
+
+regulation:
+  max_retries: 3
+  find_time: 1h
+  ban_time: 1d
+
+session:
+  name: authelia-home-ops
+  inactivity: 3d
+  expiration: 7d
+  remember_me: 6M
+  cookies:
+    - domain: mrk.am
+      authelia_url: https://auth.mrk.am
+  redis:
+    host: authelia-dragonfly.default.svc.cluster.local
+
+access_control:
+  default_policy: two_factor
+  networks:
+    - name: internal
+      networks:
+        - 10.0.0.0/8
+        - 172.16.0.0/12
+        - 192.168.0.0/16
+  rules:
+    - domain: displex.mrk.am
+      resources: ["^/auth.*$"]
+      policy: bypass
+    - domain:
+        - sonarr.mrk.am
+        - radarr.mrk.am
+      resources: ["^/api.*$"]
+      policy: bypass
+    # Bypass domains that have their own auth
+    - domain:
+        - atuin.mrk.am
+        - autobrr.mrk.am
+        - emqx.mrk.am
+        - grafana.mrk.am
+        - homepage.mrk.am
+        - irc.mrk.am
+        - jellyfin.mrk.am
+        - jellyseerr.mrk.am
+        - lldap.mrk.am
+        - s3.mrk.am
+        - ollama.mrk.am
+        - paperless.mrk.am
+        - syncthing.mrk.am
+        - sync.mrk.am
+        - tautulli.mrk.am
+        - thelounge.mrk.am
+        - rook.mrk.am
+        - sh.mrk.am
+      policy: bypass
+    - domain:
+        - sonarr.mrk.am
+        - radarr.mrk.am
+        - sabnzbd.mrk.am
+        - qbittorrent.mrk.am
+      subject:
+        - "group:media"
+      policy: one_factor
+    - domain:
+        - paperless.mrk.am
+      subject:
+        - "group:documents"
+      policy: two_factor
+    - domain: "*.mrk.am"
+      subject:
+        - "group:admin"
+      policy: two_factor
+    - domain: "*.mrk.am"
+      policy: deny
+
+notifier:
+  smtp:
+    sender: "Authelia <auth@mrk.am>"
+
+identity_validation:
+  reset_password:
+    jwt_secret: '{{ env "JWT_SECRET" }}'
+
+identity_providers:
+  oidc:
+    cors:
+      endpoints:
+        - authorization
+        - token
+        - revocation
+        - introspection
+      allowed_origins_from_client_redirect_uris: true
+    claims_policies:
+      ## Creates the 'default' claims policy.
+      default:
+        id_token: ['groups', 'email', 'email_verified', 'alt_emails', 'preferred_username', 'name']
+
+    jwks:
+      - key_id: default
+        key: {{ env "JWKS_KEY" | mindent 10 "|" | msquote }}
+    clients:
+      - client_name: Grafana
+        client_id: '{{ env "GRAFANA_OAUTH_CLIENT_ID" }}'
+        client_secret: '{{ env "GRAFANA_OAUTH_CLIENT_SECRET" }}'
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes:
+          - openid
+          - profile
+          - groups
+          - email
+        redirect_uris:
+          - https://grafana.mrk.am/login/generic_oauth
+        userinfo_signed_response_alg: none
+        claims_policy: default
+      - client_name: Immich
+        client_id: '{{ env "IMMICH_OAUTH_CLIENT_ID" }}'
+        client_secret: '{{ env "IMMICH_OAUTH_CLIENT_SECRET" }}'
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes:
+          - openid
+          - profile
+          - email
+        redirect_uris:
+          - https://photos.mrk.am/auth/login
+          - app.immich:/
+        userinfo_signed_response_alg: none
+        claims_policy: default
+        token_endpoint_auth_method: client_secret_post
+      - client_name: Paperless
+        client_id: '{{ env "PAPERLESS_OAUTH_CLIENT_ID" }}'
+        client_secret: '{{ env "PAPERLESS_OAUTH_CLIENT_SECRET" }}'
+        public: false
+        authorization_policy: two_factor
+        pre_configured_consent_duration: 1y
+        scopes:
+          - openid
+          - profile
+          - email
+        redirect_uris:
+          - https://paperless.mrk.am/accounts/oidc/authelia/login/callback/
+        userinfo_signed_response_alg: none
+        claims_policy: default
