@@ -25,12 +25,11 @@ spec:
           app:
             image:
               repository: ghcr.io/astrateam-net/home-assistant
-              tag: 2025.5.3
+              tag: 2025.5.3@sha256:549e37086a253772ca44421374d796ba24d59d7d9bf9dd6ac060e1f0dba800e9
             env:
               TZ: Europe/Moscow
               HASS_HTTP_TRUSTED_PROXY_1: 10.0.130.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 172.21.0.0/16
-              VENV_FOLDER: /venv
             envFrom:
               - secretRef:
                   name: home-assistant-secret
@@ -43,31 +42,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 2Gi
-
-          code-server:
-            image:
-              repository: ghcr.io/coder/code-server
-              tag: 4.100.3@sha256:c5b7ec231b24f26ecee243e8d9f9df57af906d03c9c8238efd893217c9f1f725
-            args:
-              - --auth
-              - none
-              - --disable-telemetry
-              - --disable-update-check
-              - --user-data-dir
-              - /config/.code-server
-              - --extensions-dir
-              - /config/.code-server
-              - --port
-              - "12321"
-              - /config
-            env:
-              HASS_SERVER: http://localhost:8123
-            resources:
-              requests:
-                cpu: 10m
-              limits:
-                memory: 1Gi
-
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
@@ -81,61 +55,37 @@ spec:
         ports:
           http:
             port: &port 8123
-            primary: true
-          code-server:
-            port: 12321
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.mrk.am"
-          - hass.mrk.am
+          - "{{ .Release.Name }}.astrateam.net"
+          - hass.astrateam.net
         parentRefs:
-          - name: internal
+          - name: external
             namespace: network
             sectionName: https
         rules:
-          - matches:
-              - path:
-                  type: PathPrefix
-                  value: /code/
-            filters:
-              - type: URLRewrite
-                urlRewrite:
-                  path:
-                    type: ReplacePrefixMatch
-                    replacePrefixMatch: /
-            backendRefs:
-              - identifier: app
-                port: 12321
           - backendRefs:
-              - identifier: app
-                port: 8123
-
+              - name: *app
+                port: *port
     persistence:
       config:
         existingClaim: home-assistant
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /config
-            code-server:
-              - path: /config
-      hass-cache:
+        globalMounts:
+          - path: /config
+      config-cache:
         existingClaim: home-assistant-cache
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /venv
-                subPath: hass-venv
-      tmpfs:
+        globalMounts:
+          - path: /config/.venv
+      config-logs:
         type: emptyDir
-        advancedMounts:
-          home-assistant:
-            app:
-              - path: /tmp
-                subPath: hass-tmp
-            code-server:
-              - path: /tmp
-                subPath: code-server-tmp
-              - path: /nonexistent
-                subPath: nonexistent
+        globalMounts:
+          - path: /config/logs
+      config-tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
