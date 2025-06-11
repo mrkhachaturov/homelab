@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: pooler
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: postgres.mrk.am
     spec:
       type: LoadBalancer
       loadBalancerIP: 10.0.130.20
