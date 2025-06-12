@@ -25,6 +25,13 @@ spec:
               - secretRef:
                   name: wiki-initdb-secret
 
+          02-fix-permissions:
+              image: busybox
+              command: ["sh", "-c", "chown -R 1000:1000 /wiki/data/repo"]
+              volumeMounts:
+                - mountPath: /wiki/data/repo
+                  name: repo
+
         containers:
           app:
             image:
