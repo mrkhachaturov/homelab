@@ -83,7 +83,7 @@ spec:
         hostnames:
           - "blog.mrk.am"
         parentRefs:
-          - name: internal
+          - name: external
             namespace: network
             sectionName: https
         rules:
