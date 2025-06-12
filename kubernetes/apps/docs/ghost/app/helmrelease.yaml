@@ -81,7 +81,7 @@ spec:
     route:
       app:
         hostnames:
-          - "{{ .Release.Name }}.mrk.am"
+          - "blog.mrk.am"
         parentRefs:
           - name: internal
             namespace: network
