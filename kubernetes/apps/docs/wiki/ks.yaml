@@ -13,6 +13,7 @@ spec:
   components:
     - ../../../../components/cnpg
     - ../../../../components/gatus/external
+    - ../../../../components/volsync
   dependsOn:
     - name: cloudnative-pg-cluster
       namespace: database
@@ -22,6 +23,7 @@ spec:
     substitute:
       APP: *app
       GATUS_STATUS: '404'
+      VOLSYNC_CAPACITY: 5Gi
   prune: true
   retryInterval: 1m
   sourceRef:
