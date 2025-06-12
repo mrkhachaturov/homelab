@@ -29,7 +29,7 @@ spec:
             image:
               repository: busybox
             command: ["sh", "-c", "chown -R 1000:1000 /wiki/data/repo"]
-            volumeMounts:
+            mounts:
               - mountPath: /wiki/data/repo
                 name: repo
 
