@@ -29,7 +29,7 @@ spec:
             image:
               repository: ghcr.io/requarks/wiki
               tag: 2.5.307@sha256:a1ac7c317a52c80da0bfc5ee57b4f009b22ed322569e435f52c57c2f24c70d8a
-            command: ["sh", "-c", "chown -R node:node /wiki/data/repo && git config --global --add safe.directory /wiki/data/repo"]
+            command: ["sh", "-c", "chown -R node:node /wiki/data/repo /wiki/data/cache /wiki/data/uploads && git config --global --add safe.directory /wiki/data/repo"]
             securityContext:
               runAsUser: 0
               runAsGroup: 0
@@ -70,21 +70,21 @@ spec:
                     key: db
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              # capabilities: { drop: ["ALL"] }
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 5m
                 memory: 50Mi
               limits:
                 memory: 500Mi
-    # defaultPodOptions:
-    #   securityContext:
-    #     runAsNonRoot: false
-    #     runAsUser: 1000
-    #     runAsGroup: 1000
-    #     fsGroup: 1000
-    #     fsGroupChangePolicy: OnRootMismatch
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
