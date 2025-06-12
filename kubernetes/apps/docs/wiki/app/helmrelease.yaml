@@ -97,7 +97,7 @@ spec:
 
     persistence:
       repo:
-        existingClaim: wiki-data
+        existingClaim: wiki
         globalMounts:
           - path: /wiki/data/repo
       cache:
