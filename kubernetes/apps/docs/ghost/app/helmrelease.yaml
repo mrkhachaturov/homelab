@@ -31,7 +31,7 @@ spec:
               database__connection__user:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: &dbdata ghost-app-secret
                     key: username
               database__connection__password:
                 valueFrom:
