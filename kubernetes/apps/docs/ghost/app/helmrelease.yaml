@@ -48,7 +48,7 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: *dbdata
-                    key: mail-from
+                    key: mail_from
               mail__options__service: Google
               mail__options__host: smtp.gmail.com
               mail__options__port: 587
@@ -57,12 +57,12 @@ spec:
                 valueFrom:
                   secretKeyRef:
                     name: *dbdata
-                    key: mail-user
+                    key: mail_user
               mail__options__auth__pass:
                 valueFrom:
                   secretKeyRef:
                     name: *dbdata
-                    key: mail-pass
+                    key: mail_pass
               # mail__api_key: ${MAILGUN_API_KEY}
 
 
