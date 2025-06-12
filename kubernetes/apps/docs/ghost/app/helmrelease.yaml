@@ -25,7 +25,7 @@ spec:
               TZ: Europe/Moscow
               url: "https://blog.mrk.am"
               NODE_ENV: production
-              admin__url: "https://blog-admin.mrk.am"
+              # admin__url: "https://blog-admin.mrk.am"
               database__client: mysql
               database__connection__host: mysql-innodbcluster.database.svc.cluster.local
               database__connection__user:
