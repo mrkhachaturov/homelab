@@ -1,0 +1,103 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app ghost
+spec:
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
+  values:
+    controllers:
+      ghost:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/astrateam-net/ghost
+              tag: 5.123.0
+            env: &env
+              TZ: Europe/Moscow
+              url: "https://blog.mrk.am"
+              NODE_ENV: production
+              # admin__url: "https://tyg3r.${XYZ_DOMAIN}"
+              database__client: mysql
+              database__connection__host:
+                valueFrom:
+                    secretKeyRef:
+                      name: &dbdata ghost-apps-secret
+                      key: host
+              database__connection__user:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: username
+              database__connection__password:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: password
+              database__connection__database:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: db
+              # mail__transport: SMTP
+              # mail__from: ${MAIILGUN_LILJ_FROM_EMAIL}
+              # mail__options__service: Mailgun
+              # mail__options__host: smtp.mailgun.org
+              # mail__options__port: 465
+              # mail__options__secure: true
+              # mail__options__auth__user: postmaster@mg.${LILJ_DOMAIN}
+              # mail__options__auth__pass: ${MAILGUN_LILJ_SMTP_PASSWORD}
+              # mail__api_key: ${MAILGUN_API_KEY}
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
+            resources:
+              requests:
+                cpu: 5m
+                memory: 50Mi
+              limits:
+                memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: &port 2368
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.mrk.am"
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
+
+    persistence:
+      content:
+        enabled: true
+        globalMounts:
+          - path: /var/lib/ghost/content
+        existingClaim: ghost
