@@ -103,17 +103,17 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-      blog-admin:
-        hostnames:
-          - blog-admin.mrk.am
-        parentRefs:
-          - name: external
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+      # blog-admin:
+      #   hostnames:
+      #     - blog-admin.mrk.am
+      #   parentRefs:
+      #     - name: external
+      #       namespace: network
+      #       sectionName: https
+      #   rules:
+      #     - backendRefs:
+      #         - name: *app
+      #           port: *port
 
     persistence:
       content:
