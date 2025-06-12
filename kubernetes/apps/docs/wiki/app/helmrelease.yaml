@@ -28,6 +28,7 @@ spec:
           02-fix-permissions:
             image:
               repository: busybox
+              tag: "1.36"
             command: ["sh", "-c", "chown -R 1000:1000 /wiki/data/repo"]
 
         containers:
