@@ -25,15 +25,15 @@ spec:
               - secretRef:
                   name: wiki-initdb-secret
 
-          # 02-fix-git:
-          #   image:
-          #     repository: ghcr.io/requarks/wiki
-          #     tag: 2.5.307@sha256:a1ac7c317a52c80da0bfc5ee57b4f009b22ed322569e435f52c57c2f24c70d8a
-          #   command: ["sh", "-c", "git config --global --add safe.directory /wiki/data/repo && chown -R node:node /wiki/data/repo"]
-          #   securityContext:
-          #     readOnlyRootFilesystem: false
-          #     runAsUser: 0
-          #     runAsGroup: 0
+          02-fix-permissions:
+            image:
+              repository: ghcr.io/requarks/wiki
+              tag: 2.5.307@sha256:a1ac7c317a52c80da0bfc5ee57b4f009b22ed322569e435f52c57c2f24c70d8a
+            command: ["sh", "-c", "chown -R node:node /wiki/data/repo && git config --global --add safe.directory /wiki/data/repo"]
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
+              readOnlyRootFilesystem: false
 
         containers:
           app:
