@@ -96,15 +96,15 @@ spec:
                 port: *port
 
     persistence:
-      repo:
+      data:
         existingClaim: wiki
         globalMounts:
-          - path: /wiki/data/repo
-      cache:
-        existingClaim: wiki-cache
-        globalMounts:
-          - path: /wiki/data/cache
-      uploads:
-        type: emptyDir
-        globalMounts:
-          - path: /wiki/data/uploads
+          - path: /wiki/data
+      # cache:
+      #   existingClaim: wiki-cache
+      #   globalMounts:
+      #     - path: /wiki/data/cache
+      # uploads:
+      #   type: emptyDir
+      #   globalMounts:
+      #     - path: /wiki/data/uploads
