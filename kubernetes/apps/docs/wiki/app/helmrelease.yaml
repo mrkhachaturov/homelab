@@ -15,6 +15,16 @@ spec:
       wiki:
         annotations:
           reloader.stakater.com/auto: "true"
+
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17"
+            envFrom:
+              - secretRef:
+                  name: wiki-initdb-secret
+
         containers:
           app:
             image:
