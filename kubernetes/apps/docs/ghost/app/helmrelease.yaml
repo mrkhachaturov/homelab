@@ -43,15 +43,28 @@ spec:
                   secretKeyRef:
                     name: *dbdata
                     key: db
-              # mail__transport: SMTP
-              # mail__from: ${MAIILGUN_LILJ_FROM_EMAIL}
-              # mail__options__service: Mailgun
-              # mail__options__host: smtp.mailgun.org
-              # mail__options__port: 465
-              # mail__options__secure: true
-              # mail__options__auth__user: postmaster@mg.${LILJ_DOMAIN}
-              # mail__options__auth__pass: ${MAILGUN_LILJ_SMTP_PASSWORD}
+              mail__transport: SMTP
+              mail__from:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: mail-from
+              mail__options__service: Google
+              mail__options__host: smtp.gmail.com
+              mail__options__port: 587
+              mail__options__secure: true
+              mail__options__auth__user:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: mail-user
+              mail__options__auth__pass:
+                valueFrom:
+                  secretKeyRef:
+                    name: *dbdata
+                    key: mail-pass
               # mail__api_key: ${MAILGUN_API_KEY}
+
 
             # securityContext:
             #   allowPrivilegeEscalation: false
