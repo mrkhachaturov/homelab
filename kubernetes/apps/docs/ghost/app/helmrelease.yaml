@@ -107,7 +107,7 @@ spec:
         hostnames:
           - blog-admin.mrk.am
         parentRefs:
-          - name: public
+          - name: external
             namespace: network
             sectionName: https
         rules:
