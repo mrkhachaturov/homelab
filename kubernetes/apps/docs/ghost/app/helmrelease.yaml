@@ -27,11 +27,7 @@ spec:
               NODE_ENV: production
               # admin__url: "https://tyg3r.${XYZ_DOMAIN}"
               database__client: mysql
-              database__connection__host:
-                valueFrom:
-                    secretKeyRef:
-                      name: &dbdata ghost-apps-secret
-                      key: host
+              database__connection__host: mysql-innodbcluster.database.svc.cluster.local
               database__connection__user:
                 valueFrom:
                   secretKeyRef:
