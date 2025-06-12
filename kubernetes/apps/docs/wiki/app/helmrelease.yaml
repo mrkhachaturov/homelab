@@ -30,6 +30,10 @@ spec:
               repository: ghcr.io/requarks/wiki
               tag: 2.5.307@sha256:a1ac7c317a52c80da0bfc5ee57b4f009b22ed322569e435f52c57c2f24c70d8a
             command: ["sh", "-c", "git config --global --add safe.directory /wiki/data/repo && chown -R node:node /wiki/data/repo"]
+            securityContext:
+              readOnlyRootFilesystem: false
+              runAsUser: 0
+              runAsGroup: 0
 
         containers:
           app:
