@@ -6,5 +6,5 @@ namespace: docs
 components:
   - ../../components/common
 resources:
-  # - ./wiki/ks.yaml
-  # - ./ghost/ks.yaml
+  - ./wiki/ks.yaml
+  - ./ghost/ks.yaml
