@@ -23,9 +23,9 @@ spec:
               tag: 5.123.0
             env: &env
               TZ: Europe/Moscow
-              url: "https://blog.mrk.am"
+              url: "https://blog1.mrk.am"
               NODE_ENV: production
-              admin__url: "https://blog-admin.mrk.am"
+              # admin__url: "https://blog-admin.mrk.am"
               database__client: mysql
               database__connection__host: mysql-innodbcluster.database.svc.cluster.local
               database__connection__user:
@@ -94,7 +94,7 @@ spec:
     route:
       app:
         hostnames:
-          - "blog.mrk.am"
+          - "blog1.mrk.am"
         parentRefs:
           - name: external
             namespace: network
@@ -103,21 +103,21 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-      blog-admin:
-        hostnames:
-          - blog-admin.mrk.am
-        parentRefs:
-          - name: intenal
-            namespace: network
-            sectionName: https
-        rules:
-          - backendRefs:
-              - name: *app
-                port: *port
+      # blog-admin:
+      #   hostnames:
+      #     - blog-admin.mrk.am
+      #   parentRefs:
+      #     - name: internal
+      #       namespace: network
+      #       sectionName: https
+      #   rules:
+      #     - backendRefs:
+      #         - name: *app
+      #           port: *port
 
-    persistence:
-      content:
-        enabled: true
-        globalMounts:
-          - path: /var/lib/ghost/content
-        existingClaim: ghost
+    # persistence:
+    #   content:
+    #     enabled: true
+    #     globalMounts:
+    #       - path: /var/lib/ghost/content
+    #     existingClaim: ghost
