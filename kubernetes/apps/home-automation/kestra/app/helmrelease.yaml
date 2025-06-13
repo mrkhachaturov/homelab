@@ -237,7 +237,7 @@ spec:
     annotations: {}
     podAnnotations: {}
     initContainers:
-      01-init-db:
+      - name: 01-init-db
         image:
           repository: ghcr.io/home-operations/postgres-init
           tag: "17"
