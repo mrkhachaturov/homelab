@@ -31,7 +31,7 @@ spec:
     remediation:
       retries: 3
   values:
-    githubConfigUrl: https://github.com/mrkhachaturov/flair
+    githubConfigUrl: https://github.com/mrkhachaturov/homelab
     githubConfigSecret: home-ops-runner-secret
     minRunners: 1
     maxRunners: 1
@@ -43,12 +43,28 @@ spec:
         resources:
           requests:
             storage: 5Gi
-    # controllerServiceAccount:
-    #   name: actions-runner-controller
-    #   namespace: actions-runner-system
+    controllerServiceAccount:
+      name: actions-runner-controller
+      namespace: actions-runner-system
     template:
       spec:
         containers:
           - name: runner
-            image: ghcr.io/actions/actions-runner:latest
+            image: ghcr.io/astrateam-net/actions-runner:2.325.0@sha256:aaa59d6125004df5e9beb79315050a9a8b9a088584ce1a98a8294f31b063066d
             command: ["/home/runner/run.sh"]
+            env:
+              - name: ACTIONS_RUNNER_REQUIRE_JOB_CONTAINER
+                value: "false"
+              - name: NODE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+            volumeMounts:
+              - mountPath: /var/run/secrets/talos.dev
+                name: talos
+                readOnly: true
+        serviceAccountName: *name
+        volumes:
+          - name: talos
+            secret:
+              secretName: *name
