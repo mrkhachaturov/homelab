@@ -31,39 +31,43 @@ spec:
               database__connection__user:
                 valueFrom:
                   secretKeyRef:
-                    name: &dbdata ghost-app-secret
+                    name: &secret ghost-app-secret
                     key: username
               database__connection__password:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: *secret
                     key: password
               database__connection__database:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: *secret
                     key: db
               mail__transport: SMTP
               mail__from:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: *secret
                     key: mail_from
-              mail__options__service: Google
-              mail__options__host: smtp.gmail.com
-              mail__options__port: 587
-              mail__options__secure: false
+              mail__options__service: Mailgun
+              mail__options__host: smtp.mailgun.org
+              mail__options__port: 465
+              mail__options__secure: true
               mail__options__auth__user:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: *secret
                     key: mail_user
               mail__options__auth__pass:
                 valueFrom:
                   secretKeyRef:
-                    name: *dbdata
+                    name: *secret
                     key: mail_pass
-              # mail__api_key: ${MAILGUN_API_KEY}
+              # mail__api_key:
+              #   valueFrom:
+              #     secretKeyRef:
+              #       name: *secret
+              #       key: mailgun_api_key
 
 
             securityContext:
