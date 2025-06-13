@@ -1,0 +1,29 @@
+{
+  "url": "https://blog.mrk.am",
+  "server": {
+    "port": 2369,
+    "host": "127.0.0.1"
+  },
+  "mail": {
+    "transport": "Direct"
+  },
+  "logging": {
+    "transports": [
+      "file",
+      "stdout"
+    ]
+  },
+  "process": "local",
+  "paths": {
+    "contentPath": "/var/lib/ghost/content"
+  },
+  "database": {
+    "client": "mysql",
+    "connection": {
+      "host": "mysql-innodbcluster.database.svc.cluster.local",
+      "user": "ghost",
+      "password": "KpmkV6rNMw2XPt2TwwFb",
+      "database": "ghost"
+    }
+  }
+}

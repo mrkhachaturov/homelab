@@ -25,7 +25,7 @@ spec:
               TZ: Europe/Moscow
               url: "https://blog.mrk.am"
               NODE_ENV: development
-              # admin__url: "https://blog-admin.mrk.am"
+              admin__url: "https://blog-admin.mrk.am"
               database__client: mysql
               database__connection__host: mysql-innodbcluster.database.svc.cluster.local
               database__connection__user:
@@ -66,10 +66,10 @@ spec:
               # mail__api_key: ${MAILGUN_API_KEY}
 
 
-            securityContext:
-              allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: false
-              capabilities: { drop: ["ALL"] }
+            # securityContext:
+            #   allowPrivilegeEscalation: false
+            #   readOnlyRootFilesystem: false
+            #   capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 5m
@@ -78,7 +78,7 @@ spec:
                 memory: 500Mi
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
