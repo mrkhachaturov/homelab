@@ -19,7 +19,6 @@ spec:
   postBuild:
     substitute:
       APP: *app
-      CNPG_NAME: *app
   prune: true
   retryInterval: 1m
   sourceRef:
