@@ -125,6 +125,10 @@ spec:
         globalMounts:
           - path: /var/lib/ghost/content
         existingClaim: ghost
+      builder:
+        type: emptyDir
+        globalMounts:
+          - path: /var/lib/ghost/builder
       git-config:
         type: secret
         name: git-config-secret
