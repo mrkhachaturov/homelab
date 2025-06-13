@@ -50,7 +50,7 @@ spec:
                     name: *secret
                     key: mail_from
               mail__options__service: Mailgun
-              mail__options__host: smtp.mailgun.org
+              mail__options__host: smtp.eu.mailgun.org
               mail__options__port: 465
               mail__options__secure: true
               mail__options__auth__user:
