@@ -66,8 +66,8 @@ spec:
               # mail__api_key: ${MAILGUN_API_KEY}
 
 
-            # securityContext:
-            #   allowPrivilegeEscalation: false
+            securityContext:
+              allowPrivilegeEscalation: true
             #   readOnlyRootFilesystem: false
             #   capabilities: { drop: ["ALL"] }
             resources:
