@@ -23,7 +23,7 @@ spec:
               tag: 5.123.0
             env: &env
               TZ: Europe/Moscow
-              url: "https://blog1.mrk.am"
+              url: "https://blog.mrk.am"
               NODE_ENV: production
               # admin__url: "https://blog-admin.mrk.am"
               database__client: mysql
@@ -115,9 +115,9 @@ spec:
       #         - name: *app
       #           port: *port
 
-    # persistence:
-    #   content:
-    #     enabled: true
-    #     globalMounts:
-    #       - path: /var/lib/ghost/content
-    #     existingClaim: ghost
+    persistence:
+      content:
+        enabled: true
+        globalMounts:
+          - path: /var/lib/ghost/content
+        existingClaim: ghost
