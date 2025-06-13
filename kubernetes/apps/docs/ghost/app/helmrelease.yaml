@@ -94,7 +94,7 @@ spec:
     route:
       app:
         hostnames:
-          - "blog1.mrk.am"
+          - "blog.mrk.am"
         parentRefs:
           - name: external
             namespace: network
