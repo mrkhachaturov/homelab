@@ -8,7 +8,7 @@ Before you start contributing, please make sure you have read and understood our
 
 1. Fork the Repository
 
-First, fork the [repository](https://github.com/astrateam-net/k8s-cluster) to your own GitHub account. This will create a copy of the project under your account.
+First, fork the [repository](https://github.com/mrkhachaturov/homelab) to your own GitHub account. This will create a copy of the project under your account.
 
 2. Clone the Repository
 

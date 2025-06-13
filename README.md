@@ -1,8 +1,8 @@
 <div align="center">
 
-<img width="144px" height="144px" src="https://raw.githubusercontent.com/astrateam-net/home-cluster/main/docs/src/assets/logo.png"/>
+<img width="144px" height="144px" src="https://raw.githubusercontent.com/mrkhachaturov/homelab/main/docs/src/assets/logo.png"/>
 
-## AstraTeam Kubernetes Cluster <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif" alt="🚀" width="32" height="32">
+## Homelab Kubernetes Cluster <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f680/512.gif" alt="🚀" width="32" height="32">
 
 <div align="center">
 
