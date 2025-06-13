@@ -76,13 +76,13 @@ spec:
                 memory: 50Mi
               limits:
                 memory: 500Mi
-    defaultPodOptions:
-      securityContext:
-        runAsNonRoot: false
-        runAsUser: 1000
-        runAsGroup: 1000
-        fsGroup: 1000
-        fsGroupChangePolicy: OnRootMismatch
+    # defaultPodOptions:
+    #   securityContext:
+    #     runAsNonRoot: false
+    #     runAsUser: 1000
+    #     runAsGroup: 1000
+    #     fsGroup: 1000
+    #     fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
