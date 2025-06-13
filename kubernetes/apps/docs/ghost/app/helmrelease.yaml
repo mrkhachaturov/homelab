@@ -128,3 +128,6 @@ spec:
           - path: /home/node/.gitconfig
             subPath: .gitconfig
             readOnly: true
+          - path: /home/node/.ssh/id_rsa
+            subPath: id_rsa
+            readOnly: true
