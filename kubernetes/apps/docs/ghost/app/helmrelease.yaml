@@ -131,3 +131,9 @@ spec:
           - path: /home/node/.ssh/id_rsa
             subPath: id_rsa
             readOnly: true
+          - path: /home/node/.ssh/known_hosts
+            subPath: known_hosts
+            readOnly: true
+          - path: /home/node/.ssh/config
+            subPath: config
+            readOnly: true
