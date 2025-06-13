@@ -121,3 +121,10 @@ spec:
         globalMounts:
           - path: /var/lib/ghost/content
         existingClaim: ghost
+      git-config:
+        type: secret
+        name: git-config-secret
+        globalMounts:
+          - path: /home/node/.gitconfig
+            subPath: .gitconfig
+            readOnly: true
