@@ -25,7 +25,7 @@ spec:
               TZ: Europe/Moscow
               url: "https://blog.mrk.am"
               NODE_ENV: production
-              # admin__url: "https://blog-admin.mrk.am"
+              admin__url: "https://blog-admin.mrk.am"
               database__client: mysql
               database__connection__host: mysql-innodbcluster.database.svc.cluster.local
               database__connection__user:
@@ -72,7 +72,7 @@ spec:
 
             securityContext:
               allowPrivilegeEscalation: false
-              readOnlyRootFilesystem: true
+              readOnlyRootFilesystem: false
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
@@ -107,17 +107,17 @@ spec:
           - backendRefs:
               - name: *app
                 port: *port
-      # blog-admin:
-      #   hostnames:
-      #     - blog-admin.mrk.am
-      #   parentRefs:
-      #     - name: internal
-      #       namespace: network
-      #       sectionName: https
-      #   rules:
-      #     - backendRefs:
-      #         - name: *app
-      #           port: *port
+      blog-admin:
+        hostnames:
+          - blog-admin.mrk.am
+        parentRefs:
+          - name: internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
     persistence:
       content:
@@ -125,10 +125,6 @@ spec:
         globalMounts:
           - path: /var/lib/ghost/content
         existingClaim: ghost
-      builder:
-        type: emptyDir
-        globalMounts:
-          - path: /var/lib/ghost/builder
       git-config:
         type: secret
         name: git-config-secret
