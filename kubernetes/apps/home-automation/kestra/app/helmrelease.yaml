@@ -186,7 +186,7 @@ spec:
     # for io.kestra.core.tasks.scripts.Bash task or io.kestra.plugin.scripts.*, attach a docker dind container in order to isolate in a container
     # every command launch
     dind:
-      enabled: true
+      enabled: false
       image:
         image: docker
         tag: dind-rootless
