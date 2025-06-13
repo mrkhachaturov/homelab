@@ -31,7 +31,7 @@ spec:
     remediation:
       retries: 3
   values:
-    githubConfigUrl: https://github.com/mrkhachaturov/homelab
+    githubConfigUrl: https://github.com/mrkhachaturov/flair
     githubConfigSecret: home-ops-runner-secret
     minRunners: 1
     maxRunners: 1
