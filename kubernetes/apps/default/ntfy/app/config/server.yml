@@ -1,7 +1,7 @@
 base-url: https://ntfy.mrk.am
 listen-http: ":8080"
 behind-proxy: true
-enable-loggin: true
+enable-login: true
 cache-file: "/var/cache/ntfy/cache.db"
 attachment-cache-dir: "/var/cache/ntfy/attachments"
 attachment-total-size-limit: "5G"
