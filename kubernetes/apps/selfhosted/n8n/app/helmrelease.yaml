@@ -60,7 +60,7 @@ spec:
               DB_POSTGRESDB_HOST:
                 valueFrom:
                   secretKeyRef:
-                    name: &pguser wiki-pguser-secret
+                    name: &pguser n8n-pguser-secret
                     key: host
               DB_POSTGRESDB_PORT:
                 valueFrom:
