@@ -49,7 +49,7 @@ spec:
               N8N_DIAGNOSTICS_ENABLED: false
               N8N_PORT: &port 8080
               N8N_HOST: &hostName n8n.mrk.am
-              # WEBHOOK_URL: https://n8n.mrk.am/
+              WEBHOOK_URL: https://n8n.mrk.am/
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
               N8N_RUNNERS_ENABLED: true
@@ -137,7 +137,7 @@ spec:
                 port: *port
       webhooks:
         hostnames:
-          - n8n-api.mrk.am
+          - n8n.mrk.am
         parentRefs:
           - name: external
             namespace: network
