@@ -8,5 +8,6 @@ components:
 resources:
   - ./atuin/ks.yaml
   - ./homepage/ks.yaml
+  - ./ntfy/ks.yaml
   # - ./lldap/ks.yaml
   # - ./immich/ks.yaml
