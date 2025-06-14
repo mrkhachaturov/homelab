@@ -1,9 +1,10 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: n8n
+  name:  &app n8n
 spec:
   interval: 1h
   chartRef:
@@ -22,12 +23,14 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
 
-        pod:
-          securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
-            fsGroup: 1000
-            fsGroupChangePolicy: "OnRootMismatch"
+        initContainers:
+          01-init-db:
+            image:
+              repository: ghcr.io/home-operations/postgres-init
+              tag: "17"
+            envFrom:
+              - secretRef:
+                  name: n8n-initdb-secret
 
         containers:
           app:
@@ -35,7 +38,8 @@ spec:
               repository: ghcr.io/n8n-io/n8n
               tag: 1.98.0
             env:
-              DB_SQLITE_VACUUM_ON_STARTUP: true
+              DB_TYPE: postgresdb
+              # DB_SQLITE_VACUUM_ON_STARTUP: true
               EXECUTIONS_DATA_PRUNE: true
               EXECUTIONS_DATA_MAX_AGE: 7
               EXECUTIONS_DATA_PRUNE_MAX_COUNT: 50000
@@ -44,20 +48,58 @@ spec:
               N8N_PROTOCOL: "https"
               N8N_PORT: &port 8080
               N8N_HOST: &hostName n8n.mrk.am
-              WEBHOOK_URL: https://n8n.mrk.am/
+              WEBHOOK_URL: https://n8n-api.mrk.am/
               N8N_LOG_LEVEL: info
               N8N_LOG_OUTPUT: console
+              NODE_FUNCTION_ALLOW_BUILTIN: "*"
               N8N_ENCRYPTION_KEY:
                 valueFrom:
                   secretKeyRef:
                     name: n8n-secret
                     key: N8N_ENCRYPTION_KEY
+              DB_POSTGRESDB_HOST:
+                valueFrom:
+                  secretKeyRef:
+                    name: &pguser wiki-pguser-secret
+                    key: host
+              DB_POSTGRESDB_PORT:
+                valueFrom:
+                  secretKeyRef:
+                    name: *pguser
+                    key: port
+              DB_POSTGRESDB_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: *pguser
+                    key: user
+              DB_POSTGRESDB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: *pguser
+                    key: password
+              DB_POSTGRESDB_DATABASE:
+                valueFrom:
+                  secretKeyRef:
+                    name: *pguser
+                    key: db
+
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 5m
-                memory: 128Mi
+                memory: 50Mi
               limits:
-                memory: 2Gi
+                memory: 500Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
 
     service:
       app:
@@ -88,7 +130,7 @@ spec:
                 port: *port
       webhooks:
         hostnames:
-          - n8n-webhook.mrk.am
+          - n8n-api.mrk.am
         parentRefs:
           - name: external
             namespace: network
