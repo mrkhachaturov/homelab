@@ -124,7 +124,7 @@ spec:
         existingClaim: *app
       media:
         type: nfs
-        server: mrk-nas.home.mrk.am
+        server: mrk-nas.homelab.am
         path: /volume1/shared/media
         globalMounts:
           - path: /media
