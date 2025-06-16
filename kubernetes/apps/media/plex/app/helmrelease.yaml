@@ -28,7 +28,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups:
           - 44    # video gid
-          # - 65539 # Media NFS gid
+          - 65539 # Media NFS gid
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
 
