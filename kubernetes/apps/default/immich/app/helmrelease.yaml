@@ -129,7 +129,7 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app-immich
+              - name: immich-immich
                 port: *port
 
     persistence:
