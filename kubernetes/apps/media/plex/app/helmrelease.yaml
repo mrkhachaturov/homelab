@@ -28,7 +28,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         supplementalGroups:
           - 44    # video gid
-          - 65539 # Media NFS gid
+          # - 65539 # Media NFS gid
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
 
@@ -122,22 +122,25 @@ spec:
     persistence:
       config:
         existingClaim: *app
+      config-cache:
+        existingClaim: plex-cache
+        globalMounts:
+          - path: /config/Library/Application Support/Plex Media Server/Cache
       media:
         type: nfs
         server: mrk-nas.homelab.am
         path: /volume1/shared/media
         globalMounts:
           - path: /media
-      transcode:
+            readOnly: true
+      tmpfs:
         type: emptyDir
-      # Separate PVC for cache to avoid backing up cache files
-      cache:
-        existingClaim: plex-cache
-        globalMounts:
-          - path: /config/Library/Application Support/Plex Media Server/Cache
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/Library/Application Support/Plex Media Server/Logs
-      tmp:
-        type: emptyDir
+        advancedMounts:
+          plex:
+            app:
+              - path: /config/Library/Application Support/Plex Media Server/Logs
+                subPath: logs
+              - path: /transcode
+                subPath: transcode
+              - path: /tmp
+                subPath: tmp
