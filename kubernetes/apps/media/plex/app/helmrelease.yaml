@@ -21,7 +21,7 @@ spec:
   values:
     defaultPodOptions:
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
@@ -68,7 +68,7 @@ spec:
                 gpu.intel.com/i915: 1
                 memory: 10Gi
             securityContext:
-              allowPrivilegeEscalation: false
+              allowPrivilegeEscalation: true
               readOnlyRootFilesystem: true
               capabilities: { drop: ["ALL"] }
 
