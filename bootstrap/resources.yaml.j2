@@ -26,7 +26,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: mrk-am-tls
-  namespace: network
+  namespace: kube-system
   annotations:
     cert-manager.io/alt-names: '*.mrk.am,mrk.am'
     cert-manager.io/certificate-name: mrk-am

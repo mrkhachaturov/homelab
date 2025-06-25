@@ -101,7 +101,7 @@ spec:
           - "blog.mrk.am"
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
@@ -112,7 +112,7 @@ spec:
           - blog-admin.mrk.am
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:

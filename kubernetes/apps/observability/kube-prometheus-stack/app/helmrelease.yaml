@@ -44,7 +44,7 @@ spec:
           hostnames: ["alertmanager.mrk.am"]
           parentRefs:
             - name: internal
-              namespace: network
+              namespace: kube-system
               sectionName: https
       alertmanagerSpec:
         alertmanagerConfiguration:
@@ -72,7 +72,7 @@ spec:
           hostnames: ["prometheus.mrk.am"]
           parentRefs:
             - name: internal
-              namespace: network
+              namespace: kube-system
               sectionName: https
       prometheusSpec:
         podMonitorSelectorNilUsesHelmValues: false

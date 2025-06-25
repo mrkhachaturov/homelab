@@ -73,7 +73,7 @@ spec:
         hostnames: ["{{ .Release.Name }}.mrk.am"]
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:

@@ -129,7 +129,7 @@ spec:
           - *hostName
         parentRefs:
           - name: internal
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - backendRefs:
@@ -140,7 +140,7 @@ spec:
           - n8n.mrk.am
         parentRefs:
           - name: external
-            namespace: network
+            namespace: kube-system
             sectionName: https
         rules:
           - matches:

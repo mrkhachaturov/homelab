@@ -7,7 +7,7 @@ spec:
   from:
     - group: gateway.envoyproxy.io
       kind: SecurityPolicy
-      namespace: network
+      namespace: kube-system
   to:
     - group: ""
       kind: Service
