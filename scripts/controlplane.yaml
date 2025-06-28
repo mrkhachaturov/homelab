@@ -9,7 +9,7 @@ machine:
         key: LS0tLS1CRUdJTiBFRDI1NTE5IFBSSVZBVEUgS0VZLS0tLS0KTUM0Q0FRQXdCUVlESzJWd0JDSUVJR2hHZWdLdkM1cGQxd3ZkWUcxZDU5NjF4eEpTRUJFNVRlMmVFRy9WeDZndAotLS0tLUVORCBFRDI1NTE5IFBSSVZBVEUgS0VZLS0tLS0K
     certSANs:
         - 127.0.0.1
-        - 10.0.130.11
+        - 10.2.130.11
     kubelet:
         image: ghcr.io/siderolabs/kubelet:v1.33.1
         extraMounts:
@@ -25,7 +25,7 @@ machine:
         defaultRuntimeSeccompProfileEnabled: true
         nodeIP:
             validSubnets:
-                - 10.0.130.0/24
+                - 10.2.130.0/24
         disableManifestsDirectory: true
     network:
         hostname: k8s-01
@@ -33,14 +33,14 @@ machine:
             - deviceSelector:
                 hardwareAddr: bc:24:11:17:e3:33
               addresses:
-                - 10.0.130.11/24
+                - 10.2.130.11/24
               routes:
                 - network: 0.0.0.0/0
-                  gateway: 10.0.130.1
+                  gateway: 10.2.130.1
               mtu: 1500
               dhcp: false
         nameservers:
-            - 10.0.130.1
+            - 10.2.130.1
     install:
         diskSelector:
             model: QEMU HARDDISK
@@ -99,7 +99,7 @@ cluster:
     id: 59_MH6uu9AT01KajutCth0ciJi8M3Iz25Zz38V0v8G8=
     secret: gfLhjjq+bdHEjLYaSxLsMPWPoLdOp6jdYrTOHuayPEk=
     controlPlane:
-        endpoint: https://10.0.130.11:6443
+        endpoint: https://10.2.130.11:6443
     clusterName: main
     network:
         cni:
@@ -127,7 +127,7 @@ cluster:
             runtime-config: admissionregistration.k8s.io/v1alpha1=true
         certSANs:
             - 127.0.0.1
-            - 10.0.130.11
+            - 10.2.130.11
         disablePodSecurityPolicy: true
         auditPolicy:
             apiVersion: audit.k8s.io/v1
@@ -169,7 +169,7 @@ cluster:
         extraArgs:
             listen-metrics-urls: http://0.0.0.0:2381
         advertisedSubnets:
-            - 10.0.130.0/24
+            - 10.2.130.0/24
     coreDNS:
         disabled: true
     allowSchedulingOnControlPlanes: true

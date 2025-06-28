@@ -28,7 +28,7 @@ spec:
               tag: 2025.5.3@sha256:549e37086a253772ca44421374d796ba24d59d7d9bf9dd6ac060e1f0dba800e9
             env:
               TZ: Europe/Moscow
-              HASS_HTTP_TRUSTED_PROXY_1: 10.0.130.0/24
+              HASS_HTTP_TRUSTED_PROXY_1: 10.2.130.0/24
               HASS_HTTP_TRUSTED_PROXY_2: 172.21.0.0/16
             envFrom:
               - secretRef:

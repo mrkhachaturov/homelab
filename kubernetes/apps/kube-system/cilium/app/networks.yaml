@@ -6,7 +6,7 @@ metadata:
 spec:
   allowFirstLastIPs: "No"
   blocks:
-    - cidr: 10.0.130.0/24
+    - cidr: 10.2.130.0/24
 ---
 # yaml-language-server: $schema=https://k8s-validation-schemas.pages.dev/cilium.io/ciliuml2announcementpolicy_v2alpha1.json
 apiVersion: cilium.io/v2alpha1
@@ -25,7 +25,7 @@ kind: Service
 metadata:
   name: kube-vip
   annotations:
-    lbipam.cilium.io/ips: 10.0.130.10
+    lbipam.cilium.io/ips: 10.2.130.10
 spec:
   type: LoadBalancer
   selector:
@@ -85,6 +85,6 @@ spec:
       peers:
         - name: "peer-64613-ipv4"
           peerASN: 64613
-          peerAddress: "10.0.130.1"
+          peerAddress: "10.2.130.1"
           peerConfigRef:
             name: "cilium-bgp-peer-config-ipv4"

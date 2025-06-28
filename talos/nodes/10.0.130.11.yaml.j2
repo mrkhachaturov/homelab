@@ -6,14 +6,14 @@ machine:
       - deviceSelector:
           hardwareAddr: bc:24:11:0a:25:8a
         addresses:
-          - 10.0.130.11/24
+          - 10.2.130.11/24
         routes:
           - network: 0.0.0.0/0
-            gateway: 10.0.130.1
+            gateway: 10.2.130.1
         mtu: 1500
         dhcp: false
         vip:
-          ip: 10.0.130.10
+          ip: 10.2.130.10
   # disks:
   #   - device: /dev/disk/by-id/nvme-KINGSTON_SNV2S1000G_50026B7785AACA55
   #     partitions:
